@@ -1,0 +1,30 @@
+﻿@model List<BlogPost>
+@{
+    var pipeline = new MarkdownPipelineBuilder()
+                           .UseAdvancedExtensions()
+                           .UseSmartyPants()
+                           .UseEmojiAndSmiley()
+                           .Build();
+
+}
+
+
+<h3 class="text-center">Featured Articles</h3>
+<div class="row">
+    @foreach (var blogpost in Model)
+    {
+        var callToAction = Markdown.ToHtml(blogpost.CallToAction, pipeline);
+
+        <div class="col-md-4 mb-4">
+            <div class="card card-hover border-primary mb-3">
+                <a asp-action="Post" asp-controller="Blog" asp-route-year="@blogpost.DatePublished.Value.ToString("yyyy")" asp-route-month="@blogpost.DatePublished.Value.ToString("MM")" asp-route-date="@blogpost.DatePublished.Value.ToString("dd")" asp-route-slug="@blogpost.Slug" title="@blogpost.Title"><img src="@blogpost.Image" class="card-img-top img-fluid rounded-top" alt="@blogpost.Title" title="@blogpost.Title"></a>
+                <div class="card-body">
+                    <h5 class="card-title"><a asp-action="Post" asp-controller="Blog" asp-route-year="@blogpost.DatePublished.Value.ToString("yyyy")" asp-route-month="@blogpost.DatePublished.Value.ToString("MM")" asp-route-date="@blogpost.DatePublished.Value.ToString("dd")" asp-route-slug="@blogpost.Slug" title="@blogpost.Title">@blogpost.Title</a></h5>
+                    <small><a asp-action="Post" asp-controller="Blog" asp-route-year="@blogpost.DatePublished.Value.ToString("yyyy")" asp-route-month="@blogpost.DatePublished.Value.ToString("MM")" asp-route-date="@blogpost.DatePublished.Value.ToString("dd")" asp-route-slug="@blogpost.Slug" asp-fragment="comments" title="@blogpost.Comments.Count Comments">@blogpost.Comments.Count Comments</a></small>&nbsp;
+                    <small>Published on @blogpost.DatePublished.Value.ToLongDateString()</small>
+                    <p class="card-text">@Html.Raw(callToAction)</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>

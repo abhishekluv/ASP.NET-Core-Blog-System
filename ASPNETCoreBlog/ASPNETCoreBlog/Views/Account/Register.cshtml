@@ -1,0 +1,67 @@
+﻿@model RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+    Layout = "_AuthenticationLayout";
+}
+
+
+<div class="bg-skew bg-skew-light">
+@if (ViewData["ForbiddenAccess"] != null)
+{
+        <p class="alert alert-danger">@ViewData["ForbiddenAccess"]</p>
+}
+else
+{
+        <h1>Register</h1>
+        <hr />
+        <div class="container py-4">
+            <div class="col-md-9 col-lg-6 mx-auto">
+                <form asp-action="Register">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="mb-3">
+                        <label asp-for="FirstName" class="control-label"></label>
+                        <input asp-for="FirstName" class="form-control" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="LastName" class="control-label"></label>
+                        <input asp-for="LastName" class="form-control" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="UserName" class="control-label"></label>
+                        <input asp-for="UserName" class="form-control" />
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Password" class="control-label"></label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="ConfirmPassword" class="control-label"></label>
+                        <input asp-for="ConfirmPassword" class="form-control" />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <recaptcha callback="recaptchaCallback" error-callback="recaptchaCallbackDisable" />
+                        <honeypot-field name="email" class="invisible" />
+                        <honeypot-time />
+                    </div>
+                    <div class="mb-3">
+                        <input type="submit" value="Register" class="btn btn-primary" id="btnSubmit" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+}
+</div>
+
+

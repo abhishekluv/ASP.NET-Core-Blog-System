@@ -10,15 +10,26 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <cache expires-after="@TimeSpan.FromSeconds(cacheTimeInSeconds)">@await Component.InvokeAsync("DNSPrefetch")</cache>
-    <title>@ViewData["Title"] - <cache expires-after="@TimeSpan.FromSeconds(3)">@await Component.InvokeAsync("SiteName")</cache></title>
+    @RenderSection("MetaTags", false)
+    <title>@ViewData["Title"] - <cache expires-after="@TimeSpan.FromSeconds(cacheTimeInSeconds)">@await Component.InvokeAsync("SiteName")</cache></title>
     @await Component.InvokeAsync("WebsiteStyles")
     <cache expires-after="@TimeSpan.FromSeconds(cacheTimeInSeconds)">@await Component.InvokeAsync("Favicon")</cache>
     <cache expires-after="@TimeSpan.FromSeconds(cacheTimeInSeconds)">@await Component.InvokeAsync("CustomCSS")</cache>
     <cache expires-after="@TimeSpan.FromSeconds(cacheTimeInSeconds)">@await Component.InvokeAsync("CustomJS")</cache>
 </head>
-<body>
+<body> 
     <header>
-        <nav class="navbar navbar-expand-lg py-3 bg-white fixed-top" aria-label="Demo 1">
+        @* <nav class="navbar bg-white fixed-top">
+            <div class="container d-flex justify-content-center">
+                <div class="ms-auto d-none d-lg-block d-xl-none">
+                    <i class="fas fa-envelope"></i> <a href="mailto:abhishek@codewithabhishekluv.com"><small>abhishek@codewithabhishekluv.com</small></a>
+                </div>
+                <div class="mx-auto">
+                    <i class="fas fa-phone"></i> <a href="tel:+91-9920347952"><small>+91-9920347952</small></a>
+                </div>
+            </div>       style="top: 30px;"
+        </nav>  *@
+        <nav class="navbar navbar-expand-lg py-3 bg-white fixed-top" aria-label="Demo 1" >
             <div class="container">
                 <a href="/" class="navbar-brand"><cache expires-after="@TimeSpan.FromSeconds(cacheTimeInSeconds)">@await Component.InvokeAsync("SiteName")</cache></a>
                 <button class="navbar-toggler"

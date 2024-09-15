@@ -1,0 +1,48 @@
+﻿@model LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = "_AuthenticationLayout";
+}
+
+<div class="d-flex align-items-center bg-skew bg-skew-primary text-white min-vh-75 overflow-hidden">
+    <div class="col-lg-8 text-center mx-auto">
+        <h1 class="display-4">Login</h1>
+    </div>
+</div>
+
+<div class="bg-skew bg-skew-light">
+    @if (ViewData["ForbiddenAccess"] != null)
+    {
+        <p class="alert alert-danger">@ViewData["ForbiddenAccess"]</p>
+    }
+    else
+    {
+        <div class="container py-4">
+            <div class="col-md-9 col-lg-6 mx-auto">
+                <form asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="UserName" class="form-control" />
+                        <label asp-for="UserName" class="form-label"></label>
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Password" class="form-control" />
+                        <label asp-for="Password" class="form-label"></label>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <recaptcha callback="recaptchaCallback" error-callback="recaptchaCallbackDisable" />
+                        <honeypot-field name="email" class="visually-hidden" />
+                        <honeypot-time />
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="submit" value="Login" class="w-100 btn btn-primary rounded-pill" id="btnSubmit" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    }
+</div>
+

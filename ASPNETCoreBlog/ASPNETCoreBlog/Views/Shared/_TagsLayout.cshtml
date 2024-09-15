@@ -10,7 +10,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <cache expires-after="@TimeSpan.FromSeconds(cacheTimeInSeconds)">@await Component.InvokeAsync("DNSPrefetch")</cache>
-    <title>@ViewData["Title"] - <cache expires-after="@TimeSpan.FromSeconds(3)">@await Component.InvokeAsync("SiteName")</cache></title>
+    @RenderSection("MetaTags", false)
+    <title>@ViewData["Title"] - <cache expires-after="@TimeSpan.FromSeconds(cacheTimeInSeconds)">@await Component.InvokeAsync("SiteName")</cache></title>
     @await Component.InvokeAsync("WebsiteStyles")
     <cache expires-after="@TimeSpan.FromSeconds(cacheTimeInSeconds)">@await Component.InvokeAsync("Favicon")</cache>
     <cache expires-after="@TimeSpan.FromSeconds(cacheTimeInSeconds)">@await Component.InvokeAsync("CustomCSS")</cache>
@@ -20,7 +21,8 @@
     <header>
         <nav class="navbar navbar-expand-lg py-3 bg-white fixed-top" aria-label="Demo 1">
             <div class="container">
-                <a href="/" class="navbar-brand"><cache expires-after="@TimeSpan.FromSeconds(cacheTimeInSeconds)">@await Component.InvokeAsync("SiteName")</cache></a>
+                <a href="/" class="navbar-brand">
+                    <cache expires-after="@TimeSpan.FromSeconds(cacheTimeInSeconds)">@await Component.InvokeAsync("SiteName")</cache>/a>
                 <button class="navbar-toggler"
                         type="button"
                         data-bs-toggle="collapse"

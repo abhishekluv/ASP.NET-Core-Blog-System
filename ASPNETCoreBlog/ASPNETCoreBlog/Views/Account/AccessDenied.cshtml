@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewData["Title"] = "AccessDenied";
+    Layout = "_AuthLayout";
+}
+
+<div class="d-flex align-items-center bg-skew bg-skew-primary text-white min-vh-75 overflow-hidden">
+    <div class="container">
+        <div class="col-lg-8 text-center mx-auto">
+            <h1 class="display-4 mb-5">Access Denied</h1>
+            <p class="lead mb-5">You don't have permission to access this area of the application.</p>
+        </div>
+    </div>
+</div>
+
+<div class="bg-skew bg-skew-light">
+    <!-- Call to action -->
+    <div class="container text-center py-5">
+        @await Component.InvokeAsync("FooterCallToAction")
+    </div>
+
+</div><!-- end bg-skew -->

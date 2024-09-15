@@ -1,0 +1,99 @@
+﻿@model MenuViewModel
+
+<div class="navbar-nav">
+    @foreach (var menu in Model.MenuItems.Where(y => !y.ParentId.HasValue).ToList())
+    {
+        if (!menu.IsDisabled)
+        {
+            var subMenuItems = Model.MenuItems.Where(e => e.ParentId.HasValue && e.ParentId == menu.Id).ToList();
+            if (subMenuItems.Count > 0)
+            {
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle px-lg-3"
+                       href="#"
+                       id="navbarDropdown"
+                       role="button"
+                       data-bs-toggle="dropdown"
+                       aria-expanded="false" title="@menu.Description">
+                        @menu.Title<i class="fas fa-angle-down ms-2" aria-hidden="true"></i>
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        @foreach (var childItem in subMenuItems)
+                        {
+                            if (!childItem.IsDisabled)
+                            {
+                                var grandChildItems = Model.MenuItems.Where(e => e.ParentId.HasValue && e.ParentId == childItem.Id).ToList();
+                                if (grandChildItems.Count > 0)
+                                {
+                                    <div class="dropdown-submenu">
+                                        <a class="dropdown-item dropdown-toggle" href="#" title="@childItem.Description">
+                                            @childItem.Title
+                                            <i class="fas fa-chevron-right ms-2" aria-hidden="true"></i>
+                                        </a>
+                                        <div class="dropdown-menu">
+                                            @foreach (var grandChild in grandChildItems)
+                                            {
+                                                if (!grandChild.IsDisabled)
+                                                {
+                                                    <a class="dropdown-item" href="@grandChild.Url" title="@grandChild.Description">@grandChild.Title</a>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <a class="dropdown-item" href="@childItem.Url" title="@childItem.Description">@childItem.Title</a>
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+            }
+            else
+            {
+                <a class="nav-link px-lg-3" href="@menu.Url" title="@menu.Description">@menu.Title</a>
+            }
+        }
+    }
+</div>
+@* @model MenuViewModel
+
+<div class="navbar-nav">
+    @foreach (var menu in Model.MenuItems.Where(y => !y.ParentId.HasValue).ToList())
+    {
+        if (!menu.IsDisabled)
+        {
+            if (menu.SubMenus != null && menu.SubMenus.Count > 0)
+            {
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle px-lg-3"
+                       href="#"
+                       id="navbarDropdown"
+                       role="button"
+                       data-bs-toggle="dropdown"
+                       aria-expanded="false" title="@menu.Description">
+                        @menu.Title<i class="fas fa-angle-down ms-2" aria-hidden="true"></i>
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        @foreach (var childItem in Model.MenuItems.Where(e => e.ParentId.HasValue && e.ParentId == menu.Id).ToList())
+                        {
+                            if (!childItem.IsDisabled)
+                            {
+                                <a class="dropdown-item" href="@childItem.Url" title="@childItem.Description">@childItem.Title</a>
+                            }
+                        }
+
+                    </div>
+                </div>
+            }
+            else
+            {
+                <a class="nav-link px-lg-3" href="@menu.Url" title="@menu.Description">@menu.Title</a>
+            }
+        }
+    }
+
+</div> *@

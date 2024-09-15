@@ -1,0 +1,18 @@
+﻿@model DNSPrefetchViewModel
+
+
+@{
+    string[] preconnect = Model.DNSPreconnect.Split("\r\n");
+
+    for (int i = 0; i < preconnect.Length; i++)
+    {
+        <link rel="preconnect" href="@preconnect[i]">
+    }
+
+    string[] prefetch = Model.DNSPrefetch.Split("\r\n");
+
+    for (int i = 0; i < prefetch.Length; i++)
+    {
+        <link rel="dns-prefetch" href="@prefetch[i]">
+    }
+}

@@ -10,6 +10,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <cache expires-after="@TimeSpan.FromSeconds(cacheTimeInSeconds)">@await Component.InvokeAsync("DNSPrefetch")</cache>
+    <meta name="robots" content="nofollow,noindex,noarchive,noodp,notranslate,noimageindex,nosnippet,noydir" />
     <title>@ViewData["Title"] - <cache expires-after="@TimeSpan.FromSeconds(3)">@await Component.InvokeAsync("SiteName")</cache></title>
     @await Component.InvokeAsync("WebsiteStyles")
     <cache expires-after="@TimeSpan.FromSeconds(cacheTimeInSeconds)">@await Component.InvokeAsync("Favicon")</cache>

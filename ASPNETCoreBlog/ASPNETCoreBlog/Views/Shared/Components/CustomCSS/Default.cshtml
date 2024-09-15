@@ -1,0 +1,10 @@
+﻿@model CustomCSSViewModel
+
+
+@if(Model.IsCustomCSSOn){
+    <!--Custom CSS Starts Here-->
+    <style type="text/css">
+        @Html.Raw(Model.CustomCSS)
+    </style>
+    <!--Custom CSS Ends Here-->
+}

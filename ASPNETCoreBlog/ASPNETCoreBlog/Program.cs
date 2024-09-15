@@ -1,9 +1,18 @@
 using ASPNETCoreBlog.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
+var config = builder.Configuration;
 
 // Add services to the container.
-builder.Services.AddControllersWithViews().AddRazorOptions(options =>
+builder.Services.AddControllersWithViews(options =>
+{
+    var cacheProfiles = config.GetSection("CacheProfiles").GetChildren();
+    foreach (var cacheProfile in cacheProfiles)
+    {
+        options.CacheProfiles.Add(cacheProfile.Key, cacheProfile.Get<CacheProfile>());
+    }
+}).AddRazorOptions(options =>
 {
     // Clear existing file extensions and add only .cshtml
     options.ViewLocationFormats.Clear();
@@ -43,6 +52,14 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "pages",
+    pattern: "{slug}", defaults: new { Controller = "Pages", Action = "Index" });
+
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "default",
