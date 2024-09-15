@@ -1,21 +1,38 @@
+using ASPNETCoreBlog.Data;
+using EFCoreSecondLevelCacheInterceptor;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
 
 namespace ASPNETCoreBlog.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly BlogSystemContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(BlogSystemContext context)
         {
-            _logger = logger;
+            _context = context;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        [ResponseCache(CacheProfileName = "HomePageCache")]
+        public async Task<IActionResult> Index()
         {
-            return View();
-        }
+            // Fetch the home page from the database
+            var homePage = await _context.HomePage
+                .Where(x => x.Id == 1)
+                .AsNoTracking()
+                .Cacheable()
+                .FirstOrDefaultAsync();
 
+            // Check if homePage is null
+            if (homePage == null)
+            {
+                return NotFound();
+            }
+
+            // Return the view with the homePage data
+            return View(homePage);
+        }
     }
 }

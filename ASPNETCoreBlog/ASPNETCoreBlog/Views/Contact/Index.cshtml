@@ -1,0 +1,118 @@
+﻿@model Contact
+
+@{
+    ViewData["Title"] = @ViewBag.ContactPage.Title;
+    Layout = "_ContactLayout";
+    var pipeline = new MarkdownPipelineBuilder()
+                           .UseAdvancedExtensions()
+                           .UseSmartyPants()
+                           .UseEmojiAndSmiley()
+                           .Build();
+    var callToAction = Markdown.ToHtml(ViewBag.ContactPage.CallToAction, pipeline);
+    var content = Markdown.ToHtml(ViewBag.ContactPage.Content, pipeline);
+    var beforeContent = Markdown.ToHtml(ViewBag.ContactPage.BeforeContent, pipeline);
+    var afterContent = Markdown.ToHtml(ViewBag.ContactPage.AfterContent, pipeline);
+    var footerContent = Markdown.ToHtml(ViewBag.ContactPage.FooterContent, pipeline);
+}
+
+
+<div class="d-flex align-items-center bg-skew bg-skew-primary text-white min-vh-75 overflow-hidden">
+    <div class="container mb-5 py-5">
+        <div class="col-lg-10 text-center mx-auto">
+            <h1 class="display-4 mb-4">@ViewBag.ContactPage.Title</h1>
+            @Html.Raw(callToAction)
+        </div>
+    </div>
+</div>
+
+<div class="bg-skew bg-skew-light">
+    <div class="container pt-4 pb-5">
+        <div class="row">
+            <div class="col-md-12">
+
+                @Html.Raw(beforeContent)
+
+                <div class="divider mx-auto"></div>
+
+                @Html.Raw(content)
+
+                <div class="divider mx-auto"></div>
+
+                @Html.Raw(afterContent)
+
+                <div class="divider mx-auto"></div>
+
+                @Html.Raw(footerContent)
+
+            </div>
+
+            <div class="col-md-12">
+                <form asp-action="Index" method="post">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="form-floating">
+                                <input asp-for="FullName" class="form-control" placeholder="Enter your full name" />
+                                <label asp-for="FullName" class="form-label"></label>
+                                <span asp-validation-for="FullName" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <div class="form-floating">
+                                <input asp-for="Country" class="form-control" placeholder="Enter your country" />
+                                <label asp-for="Country" class="form-label"></label>
+                                <span asp-validation-for="Country" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="form-floating">
+                                <input asp-for="City" class="form-control" placeholder="Enter your city" />
+                                <label asp-for="City" class="form-label"></label>
+                                <span asp-validation-for="City" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="form-floating">
+                                <input asp-for="MobileNumber" class="form-control" type="tel" placeholder="Please share your phone number with country code" />
+                                <label asp-for="MobileNumber" class="form-label"></label>
+                                <span asp-validation-for="MobileNumber" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <textarea placeholder="Type your message here" asp-for="Message" class="form-control" rows="10"></textarea>
+                        <span asp-validation-for="Message" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        <input type="submit" value="Contact me" class="btn btn-primary rounded-pill" id="btnSubmit" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div><!-- end bg-skew -->
+
+@section MetaTags{
+    <meta name="robots" content="all" />
+    <meta name="keywords" content="@ViewBag.ContactPage.MetaKeywords" />
+    <meta name="description" content="@ViewBag.ContactPage.MetaDescription" />
+    <meta name="generator" content="DojoHaven Training & Consulting LLP" />
+    <meta name="audience" content="all" />
+    <link rel="canonical" href="@Url.AbsoluteUrl()" />
+}

@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewData["Title"] = "ThankYou";
+    Layout = "_AuthLayout";
+}
+
+<div class="d-flex align-items-center bg-skew bg-skew-primary text-white min-vh-75 overflow-hidden">
+    <div class="col-lg-8 text-center mx-auto">
+        <h1 class="display-4">Thank you!</h1>
+    </div>
+</div>
+
+<div class="bg-skew bg-skew-light">
+    <div class="container pt-4 pb-5">
+        <p>I just wanted to let you know that I have received your message.</p>
+
+        <p>I'll contact you on your email address as soon as possible.</p>
+
+        <p>You can WhatsApp me at +91-9920347952</p>
+
+        <p>My email address is <a href="mailto:abhishek@codewithabhishekluv.com">abhishek@codewithabhishekluv.com</a></p>
+
+        <p>Cheers</p>
+
+        <blockquote>Code with Abhishek Luv</blockquote>
+    </div>
+
+    <div class="divider mx-auto"></div>
+
+    <!-- Call to action -->
+    <div class="container text-center py-5">
+        @await Component.InvokeAsync("FooterCallToAction")
+    </div>
+</div>
+
+
+

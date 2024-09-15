@@ -267,36 +267,6 @@
     </div>
 </div><!-- end bg-skew -->
 
-
-<script type="application/ld+json">
-    {
-      "@@context": "https://schema.org",
-      "@@type": "BlogPosting",
-        "mainEntityOfPage": {
-          "@@type": "WebPage",
-          "@@id": "@Url.AbsoluteUrl()"
-      },
-      "headline": "@Model.Title",
-      "description": "@Model.MetaDescription",
-      "image": "@Model.Image",
-      "author": {
-        "@@type": "Person",
-        "name": "dotnetRex"
-      },
-      "publisher": {
-        "@@type": "Organization",
-        "name": "dotnetRex",
-        "logo": {
-          "@@type": "ImageObject",
-          "url": "https://i.imgur.com/3y2pl0C.png"
-        }
-      },
-      "datePublished": "@Model.DatePublished.Value.ToString("dd/MM/yyyy")",
-      "dateModified": "@dateUpdated"
-    }
-</script>
-
-
 @section MetaTags{
     <link rel="canonical" href="@Url.AbsoluteUrl()" />
     <meta name="robots" content="all"/>
@@ -304,15 +274,6 @@
     <meta name="description" content="@Model.MetaDescription"/>
     <meta name="generator" content="DojoHaven Training & Consulting LLP" />
     <meta name="audience" content="all"/>
-    <meta property="og:locale" content="en_US"/>
-    <meta property="og:title" content="@Model.Title"/>
-    <meta property="og:site_name" content="DojoHaven Training & Consulting LLP" />
-    <meta property="og:url" content="@Url.AbsoluteUrl()"/>
-    <meta property="og:description" content="@Model.MetaDescription"/>
-    <meta property="og:type" content="article"/>
-    <meta property="og:image" content="@Model.Image"/>
-    <meta property="og:image:width" content="680"/>
-    <meta property="og:image:height" content="385"/>
 
     @if (Model.Tags.Any())
     {
@@ -322,10 +283,4 @@
         }
     }
     <meta property="article:published_time" content="@Model.DatePublished.Value.ToString("dddd, MMMM dd, yyyy h:mm:ss tt")" />
-    <meta name="twitter:card" content="summary_large_image"/>
-    <meta name="twitter:site" content="@@dotnetRex" />
-    <meta name="twitter:title" content="@Model.Title"/>
-    <meta name="twitter:description" content="@Model.MetaDescription"/>
-    <meta name="twitter:creator" content="@@dojohaven" />
-    <meta name="twitter:image" content="@Model.Image"/>
 }
