@@ -21,6 +21,7 @@ namespace ASPNETCoreBlog.Data
         public DbSet<HomePage> HomePage { get; set; }
         public DbSet<ContactPage> ContactPage { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<SiteSettings> SiteSettings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -47,7 +47,6 @@ namespace ASPNETCoreBlog.Infrastructure
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                 options.LoginPath = "/Account/Login";
                 options.LogoutPath = "/Account/Logout";
-                //options.Cookie.Domain = ".dojohaven.com";
             });
 
             services.Configure<PasswordHasherOptions>(options => options.IterationCount = 250000);
