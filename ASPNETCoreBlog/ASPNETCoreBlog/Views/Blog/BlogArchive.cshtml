@@ -1,0 +1,110 @@
+﻿@model BlogArchiveViewModel
+
+@{
+    ViewData["Title"] = "Blog Archives";
+    var pipeline = new MarkdownPipelineBuilder()
+                          .UseAdvancedExtensions()
+                          .UseSmartyPants()
+                          .UseEmojiAndSmiley()
+                          .Build();
+    Layout = "_BlogPostLayout";
+}
+
+<div class="d-flex align-items-center bg-skew bg-skew-primary text-white min-vh-75 overflow-hidden">
+    <div class="col-lg-8 text-center mx-auto">
+        <h1 class="display-4">Blog Archives</h1>
+        <p class="lead">Stay informed and inspired</p>
+    </div>
+</div>
+
+
+<div class="bg-skew bg-skew-light">
+    <div class="container py-4">
+        <div class="row g-4 mb-5">
+            @foreach (var blogpost in Model.BlogPosts)
+            {
+                var callToAction = Markdown.ToHtml(blogpost.CallToAction, pipeline);
+                <div class="col-md-6">                  
+                        <div class="card card-hover h-100">
+                        <a asp-action="Post" asp-controller="Blog" asp-route-year="@blogpost.DatePublished.Value.ToString("yyyy")" asp-route-month="@blogpost.DatePublished.Value.ToString("MM")" asp-route-date="@blogpost.DatePublished.Value.ToString("dd")" asp-route-slug="@blogpost.Slug" title="@blogpost.Title"><img src="@blogpost.Image" class="card-img-top img-fluid" alt="@blogpost.Title" title="@blogpost.Title" width="1000" height="500" /></a>
+                        <div class="card-body p-4 p-xl-5 text-center">
+                            <h2 class="card-title mb-4"><a asp-action="Post" asp-controller="Blog" asp-route-year="@blogpost.DatePublished.Value.ToString("yyyy")" asp-route-month="@blogpost.DatePublished.Value.ToString("MM")" asp-route-date="@blogpost.DatePublished.Value.ToString("dd")" asp-route-slug="@blogpost.Slug" title="@blogpost.Title" class="stretched-link text-decoration-none">@blogpost.Title</a></h2>
+                            <div class="small mb-4"><a asp-action="Post" asp-controller="Blog" asp-route-year="@blogpost.DatePublished.Value.ToString("yyyy")" asp-route-month="@blogpost.DatePublished.Value.ToString("MM")" asp-route-date="@blogpost.DatePublished.Value.ToString("dd")" asp-route-slug="@blogpost.Slug" asp-fragment="comments" title="@blogpost.Comments.Count Comments">@blogpost.Comments.Count Comments</a></div>
+                            <div class="small mb-4"><span class="fw-light">published on </span>@blogpost.DatePublished.Value.ToLongDateString()</div>
+                            <p class="card-text text-secondary">@Html.Raw(callToAction)</p>
+                            </div>
+                        </div>
+                    
+                </div>
+            }
+
+            
+        </div>
+
+        <nav aria-label="Page">
+            <ul class="pagination justify-content-center gap-2 flex-wrap">
+                @if (Model.HasPreviousPage)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-action="BlogArchive" asp-route-page="@(Model.CurrentPage - 1)" asp-route-pageSize="@Model.PageSize" aria-label="Previous">
+                            <span aria-hidden="true">Previous</span>
+                        </a>
+                    </li>
+                }else{
+                    <li class="page-item disabled">
+                        <a class="page-link" asp-action="BlogArchive" asp-route-page="@(Model.CurrentPage - 1)" asp-route-pageSize="@Model.PageSize" aria-label="Previous">
+                            <span aria-hidden="true">Previous</span>
+                        </a>
+                    </li>
+                }
+
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    if (i == Model.CurrentPage)
+                    {
+                        <li class="page-item active"><a class="page-link" href="#">@i</a></li>
+                    }
+                    else
+                    {
+                        <li class="page-item"><a class="page-link" asp-action="BlogArchive" asp-route-page="@i" asp-route-pageSize="@Model.PageSize">@i</a></li>
+                    }
+                }
+
+                @if (Model.HasNextPage)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-action="BlogArchive" asp-route-page="@(Model.CurrentPage + 1)" asp-route-pageSize="@Model.PageSize" aria-label="Next">
+                            <span aria-hidden="true">Next</span>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+@section MetaTags{
+    <meta name="robots" content="all" />
+    <meta name="description" content="Browse Blog Posts" />
+    <meta name="generator" content="DojoHaven Training & Consulting LLP" />
+    <meta name="audience" content="all" />
+    <link rel="canonical" href="@Url.AbsoluteUrl()" />
+
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="Blog Archives - Dojo Haven" />
+    <meta property="og:site_name" content="DojoHaven Training & Consulting LLP" />
+    <meta property="og:url" content="@Url.AbsoluteUrl()" />
+    <meta property="og:description" content="Browse Blog Posts" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://d1tl4kjbl4uui8.cloudfront.net/images/dotnetRex_blog_archive.png" />
+    <meta property="og:image:width" content="680" />
+    <meta property="og:image:height" content="385" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@Url.AbsoluteUrl()" />
+    <meta name="twitter:title" content="Blog Archives - Dojo Haven" />
+    <meta name="twitter:description" content="Browse Blog Posts" />
+    <meta name="twitter:creator" content="@@dojohaven" />
+    <meta name="twitter:image" content="https://d1tl4kjbl4uui8.cloudfront.net/images/dotnetRex_blog_archive.png" />
+}

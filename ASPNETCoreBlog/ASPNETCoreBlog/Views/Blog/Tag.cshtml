@@ -1,0 +1,120 @@
+﻿@model TagViewModel
+
+@{
+    ViewData["Title"] = Model.Tag.TagDescription;
+    Layout = "_TagLayout";
+    var pipeline = new MarkdownPipelineBuilder()
+                          .UseAdvancedExtensions()
+                          .UseSmartyPants()
+                          .UseEmojiAndSmiley()
+                          .Build();
+}
+
+<div class="d-flex align-items-center bg-skew bg-skew-primary text-white min-vh-75 overflow-hidden">
+    <div class="col-lg-8 text-center mx-auto">
+        <h1 class="display-4">@Model.Tag.TagDescription</h1>
+        <p class="lead">Discover all blog posts tagged with "@Model.Tag.TagDescription"</p>
+    </div>
+</div>
+
+<div class="bg-skew bg-skew-light">
+    <div class="container pt-4 pb-5">
+        <p>@Model.Tag.TagSummary</p>
+
+        @if (Model.Tag.Posts.Any())
+        {
+            <div class="container">
+                <div class="list-group">
+                    @foreach (var blogpost in Model.Tag.Posts)
+                    {
+                        var callToAction = Markdown.ToHtml(blogpost.CallToAction, pipeline);
+
+                        <a asp-action="Post" asp-controller="Blog" asp-route-year="@blogpost.DatePublished.Value.ToString("yyyy")" asp-route-month="@blogpost.DatePublished.Value.ToString("MM")" asp-route-date="@blogpost.DatePublished.Value.ToString("dd")" asp-route-slug="@blogpost.Slug" title="@blogpost.Title" class="list-group-item list-group-item-action" aria-current="true">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">@blogpost.Title</h5>
+                            </div>
+                            <p class="mb-1">@Html.Raw(callToAction)</p>
+                            <small>@blogpost.Comments.Count Comments</small>
+                        </a>
+                    }
+                </div>
+
+                <div class="pt-4">
+                    <nav aria-label="Page">
+                        <ul class="pagination justify-content-center gap-2 flex-wrap">
+                            @if (Model.HasPreviousPage)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" asp-action="Tag" asp-route-page="@(Model.CurrentPage - 1)" asp-route-pageSize="@Model.PageSize" aria-label="Previous">
+                                        <span aria-hidden="true">Previous</span>
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="page-item disabled">
+                                    <a class="page-link" asp-action="Tag" asp-route-page="@(Model.CurrentPage - 1)" asp-route-pageSize="@Model.PageSize" aria-label="Previous">
+                                        <span aria-hidden="true">Previous</span>
+                                    </a>
+                                </li>
+                            }
+
+                            @for (int i = 1; i <= Model.TotalPages; i++)
+                            {
+                                if (i == Model.CurrentPage)
+                                {
+                                    <li class="page-item active"><a class="page-link" href="#">@i</a></li>
+                                }
+                                else
+                                {
+                                    <li class="page-item"><a class="page-link" asp-action="Tag" asp-route-page="@i" asp-route-pageSize="@Model.PageSize">@i</a></li>
+                                }
+                            }
+
+                            @if (Model.HasNextPage)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" asp-action="Tag" asp-route-page="@(Model.CurrentPage + 1)" asp-route-pageSize="@Model.PageSize" aria-label="Next">
+                                        <span aria-hidden="true">Next</span>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        }
+        else
+        {
+            <p>No blog posts for this tag</p>
+        }
+
+    </<div>
+</div>
+
+
+
+@section MetaTags{
+    <meta name="robots" content="all" />
+    <meta name="description" content="@Model.Tag.TagSummary" />
+    <meta name="generator" content="DojoHaven Training & Consulting LLP" />
+    <meta name="audience" content="all" />
+    <link rel="canonical" href="@Url.AbsoluteUrl()" />
+
+    <meta property="og:locale" content="en_US" />
+            <meta property="og:title" content="Tag: @Model.Tag.TagDescription" />
+            <meta property="og:site_name" content="DojoHaven Training & Consulting LLP" />
+    <meta property="og:url" content="@Url.AbsoluteUrl()" />
+            <meta property="og:description" content="@Model.Tag.TagSummary" />
+    <meta property="og:type" content="website" />
+            <meta property="og:image" content="@Model.Tag.TagImage" />
+    <meta property="og:image:width" content="680" />
+    <meta property="og:image:height" content="385" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:site" content="DojoHaven Training & Consulting LLP" />
+            <meta name="twitter:title" content="Tag: @Model.Tag.TagDescription" />
+            <meta name="twitter:description" content="@Model.Tag.TagSummary" />
+    <meta name="twitter:creator" content="@@dojohaven" />
+            <meta name="twitter:image" content="@Model.Tag.TagImage" />
+}

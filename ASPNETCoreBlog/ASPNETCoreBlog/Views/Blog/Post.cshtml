@@ -1,0 +1,331 @@
+﻿@model BlogPostViewModelFront
+
+@{
+    ViewData["Title"] = Model.Title;
+    Layout = "_BlogPostLayout";
+    var pipeline = new MarkdownPipelineBuilder()
+                           .UseAdvancedExtensions()
+                           .UseSmartyPants()
+                           .UseEmojiAndSmiley()
+                           .Build();
+
+    var callToAction = Markdown.ToHtml(Model.CallToAction, pipeline);
+    var beforeContent = Markdown.ToHtml(Model.BeforeContent, pipeline);
+    var content = Markdown.ToHtml(Model.Content, pipeline);
+    var afterContent = Markdown.ToHtml(Model.AfterContent, pipeline);
+    var footerContent = Markdown.ToHtml(Model.FooterContent, pipeline);
+    var ad1 = Markdown.ToHtml(Model.Ad1, pipeline);
+    var ad2 = Markdown.ToHtml(Model.Ad2, pipeline);
+    var ad3 = Markdown.ToHtml(Model.Ad3, pipeline);
+    var buymeCoffee = Markdown.ToHtml(Model.BuyMeCoffee, pipeline);  
+    string dateUpdated;
+
+    if (Model.DateUpdated.Value.ToString("dd/MM/yyyy") == null)
+    {
+        dateUpdated = Model.DatePublished.Value.ToString("dd/MM/yyyy");
+    }
+    else
+    {
+        dateUpdated = Model.DateUpdated.Value.ToString("dd/MM/yyyy");
+    }
+}
+
+
+
+<div class="d-flex align-items-center bg-skew bg-skew-primary text-white min-vh-75 overflow-hidden">
+    <div class="col-lg-8 text-center mx-auto">
+        <h1 class="display-4">@Model.Title</h1>
+        <small><a asp-action="Post" asp-controller="Blog" asp-route-year="@Model.DatePublished.Value.ToString("yyyy")" asp-route-month="@Model.DatePublished.Value.ToString("MM")" asp-route-date="@Model.DatePublished.Value.ToString("dd")" asp-route-slug="@Model.Slug" asp-fragment="comments" title="@Model.Comments.Count Comments" class="text-white">@Model.Comments.Count Comments</a></small>&nbsp;
+        <small>Published on @Model.DatePublished.Value.ToString("dd/MM/yyyy")</small>
+        <div class="small py-2"><span class="fw-light">Tagged: </span>
+            @{
+                bool first = true;
+            }
+
+            @foreach (var tag in Model.Tags)
+            {
+                if (!first)
+                {
+                    @:,
+                }
+
+                <a asp-action="Tag" asp-route-tagName="@tag.Name" title="@tag.TagSummary" class="link-body-emphasis text-white">@tag.TagDescription</a>
+
+                first = false;
+            }
+        </div>
+    </div>
+</div>
+
+<div class="bg-skew bg-skew-light">
+    <div class="container pt-4 pb-5">
+        @if (TempData["Message"] != null)
+        {
+            <div class="alert alert-success" role="alert">
+                @TempData["Message"]
+            </div>
+        }
+
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger" role="alert">
+                @TempData["Error"]
+            </div>
+        }
+       <div class="row">
+            <div class="col-md-12 ">
+                <div class="justify-content-evenly">
+                    @Html.Raw(callToAction)
+                </div>
+
+                <br />
+
+                <div class="justify-content-evenly">
+                    <!--subscribe to newsletter-->
+                    @Html.Raw(beforeContent)
+                </div>
+
+                <br />
+
+                <div class="justify-content-evenly">
+                    <div class="text-center">
+                        @Html.Raw(ad1)
+                    </div>
+                </div>
+
+                <br />
+
+
+                <div class="justify-content-evenly">
+                    @Html.Raw(content)
+                </div>
+
+                <br />
+
+                <div class="justify-content-evenly">
+                    <div class="text-center">
+                        @Html.Raw(ad2)
+                    </div>
+                </div>
+                <br />
+
+                <div class="justify-content-evenly">
+                    @Html.Raw(afterContent)
+                </div>
+                <br />
+
+                <div class="justify-content-evenly">
+                    @Html.Raw(footerContent)
+                </div>
+                <br />
+                <div class="justify-content-evenly">
+                    <div class="text-center">
+                        @Html.Raw(ad3)
+                    </div>
+                </div>
+                <br />
+                <div class="justify-content-evenly">
+                    <div class="text-center">
+                        @Html.Raw(buymeCoffee)
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row d-flex justify-content-center mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex flex-start align-items-center">
+                                    <img class="rounded-circle shadow-1-strong me-3"
+                                         src="https://d1tl4kjbl4uui8.cloudfront.net/images/abby.png" alt="avatar" width="150"
+                                         height="150" />
+                                    <div>
+                                        <h6 class="fw-bold text-primary mb-1">Abhishek Rajiv Luv</h6>
+                                        <p class="text-muted small mb-0">
+                                            Author & Online Trainer
+                                        </p>
+                                        <p class="mt-3 mb-4 pb-2">
+                                            Abby is a skilled .NET and ASP.NET Trainer with more than 11 years of teaching experience, specializing in C#, ASP.NET Core MVC, Entity Framework Core, Visual Studio, LINQ, Repository and Unit of work pattern, ASP.NET Core Web API, Git and Github, Angular, and more. He has trained clients worldwide and is passionate about helping them achieve success in the field.
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br />
+
+                @*             <cache expires-after="@TimeSpan.FromSeconds(30)">@await Component.InvokeAsync("ShowFeaturedBlogPost")</cache>
+
+                <br />
+
+                <cache expires-after="@TimeSpan.FromSeconds(30)">@await Component.InvokeAsync("ShowTrainingPagesTopics")</cache>
+
+                <br />
+
+                <cache expires-after="@TimeSpan.FromSeconds(30)">@await Component.InvokeAsync("ShowFeaturedInterviewTopics")</cache>
+
+                <br /> *@
+
+                <h3 class="text-center" id="comments">Recent Comments</h3>
+                @foreach (var comment in Model.Comments.Where(x => x.IsApproved.Value).OrderBy(x => x.PostedOn))
+                {
+                    if (comment.Name.Contains("dotnetRex"))
+                    {
+                        <div class="text-dark">
+                            <div class="d-flex flex-start mb-4">
+                                <div class="card w-100">
+                                    <div class="card-body p-4">
+                                        <div class="">
+                                            <h5>@comment.Name <span class="badge text-bg-primary">Moderator @@ dotnetRex</span></h5>
+                                            <p class="small">Posted on @comment.PostedOn.Value.ToString("dd/MM/yyyy hh:mm tt")</p>
+                                            <p>@comment.CommentMessage</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        @*<div class="card mb-3">
+                <div class="card-body">
+                <p>@comment.CommentMessage</p>
+                </div>
+
+                <div class="card-footer text-muted">
+                Posted by @comment.Name on @comment.PostedOn.Value.ToString("dd/MM/yyyy hh:mm tt")
+                </div>
+
+                </div>*@
+                        <div class="text-dark">
+                            <div class="d-flex flex-start mb-4">
+                                @*<img class="rounded-circle shadow-1-strong me-3"
+                        src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(32).webp" alt="avatar" width="65"
+                        height="65" />*@
+                                <div class="card w-100">
+                                    <div class="card-body p-4">
+                                        <div class="">
+                                            <h5>@comment.Name</h5>
+
+                                            <p class="small">Posted on @comment.PostedOn.Value.ToString("dd/MM/yyyy hh:mm tt")</p>
+                                            <p>@comment.CommentMessage</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+                }
+
+                @if (Model.IsCommentEnabled.Value)
+                {
+                    if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                    {
+                        <h3 class="text-center">Hello, @User.Identity.Name</h3>
+                        <form asp-action="AddComment" asp-route-slug="@Model.Slug" method="post">
+                            <input type="hidden" class="form-control" asp-for="Comment.Name" value="dotnetRex" />
+                            <input type="hidden" class="form-control" asp-for="Comment.Email" value="abby@dotnetrex.com" />
+                            <div class="mb-3">
+                                <label for="commentMessage" class="form-label">Comment</label>
+                                <textarea class="form-control" asp-for="Comment.Comment" rows="10"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="btnSubmit">Add Comment</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <h3 class="text-center">Add a Comment</h3>
+                        <form asp-action="AddComment" asp-route-slug="@Model.Slug" method="post">
+                            <div class="mb-3">
+                                <label for="Name" class="form-label">Name</label>
+                                <input type="text" class="form-control" asp-for="Comment.Name" />
+                                <span asp-validation-for="Comment.Name" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="Email" class="form-label">Email</label>
+                                <input type="email" class="form-control" asp-for="Comment.Email" />
+                                <span asp-validation-for="Comment.Email" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="commentMessage" class="form-label">Comment</label>
+                                <textarea class="form-control" asp-for="Comment.Comment" rows="10"></textarea>
+                                <span asp-validation-for="Comment.Comment" class="text-danger"></span>
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="btnSubmit">Add Comment</button>
+                        </form>
+                    }
+                }
+                else
+                {
+                    <p class="text-danger text-center">Comments are disabled for this post</p>
+                }
+
+            </div>
+       </div>
+    </div>
+</div><!-- end bg-skew -->
+
+
+<script type="application/ld+json">
+    {
+      "@@context": "https://schema.org",
+      "@@type": "BlogPosting",
+        "mainEntityOfPage": {
+          "@@type": "WebPage",
+          "@@id": "@Url.AbsoluteUrl()"
+      },
+      "headline": "@Model.Title",
+      "description": "@Model.MetaDescription",
+      "image": "@Model.Image",
+      "author": {
+        "@@type": "Person",
+        "name": "dotnetRex"
+      },
+      "publisher": {
+        "@@type": "Organization",
+        "name": "dotnetRex",
+        "logo": {
+          "@@type": "ImageObject",
+          "url": "https://i.imgur.com/3y2pl0C.png"
+        }
+      },
+      "datePublished": "@Model.DatePublished.Value.ToString("dd/MM/yyyy")",
+      "dateModified": "@dateUpdated"
+    }
+</script>
+
+
+@section MetaTags{
+    <link rel="canonical" href="@Url.AbsoluteUrl()" />
+    <meta name="robots" content="all"/>
+    <meta name="keywords" content="@Model.MetaKeywords"/>
+    <meta name="description" content="@Model.MetaDescription"/>
+    <meta name="generator" content="DojoHaven Training & Consulting LLP" />
+    <meta name="audience" content="all"/>
+    <meta property="og:locale" content="en_US"/>
+    <meta property="og:title" content="@Model.Title"/>
+    <meta property="og:site_name" content="DojoHaven Training & Consulting LLP" />
+    <meta property="og:url" content="@Url.AbsoluteUrl()"/>
+    <meta property="og:description" content="@Model.MetaDescription"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:image" content="@Model.Image"/>
+    <meta property="og:image:width" content="680"/>
+    <meta property="og:image:height" content="385"/>
+
+    @if (Model.Tags.Any())
+    {
+        @foreach (var tag in Model.Tags)
+        {
+            <meta property="article:tag" content="@tag.TagDescription"/>
+        }
+    }
+    <meta property="article:published_time" content="@Model.DatePublished.Value.ToString("dddd, MMMM dd, yyyy h:mm:ss tt")" />
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:site" content="@@dotnetRex" />
+    <meta name="twitter:title" content="@Model.Title"/>
+    <meta name="twitter:description" content="@Model.MetaDescription"/>
+    <meta name="twitter:creator" content="@@dojohaven" />
+    <meta name="twitter:image" content="@Model.Image"/>
+}
