@@ -1,7 +1,45 @@
-﻿
+﻿@model DashboardViewModel
+
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Dashboard";
 }
 
-<h1>Index</h1>
+<h1>Dashboard</h1>
 
+<div class="row">
+    <div class="col-md-4">
+        <div class="card mb-3">
+            <div class="card-header text-white bg-primary">
+                Contacts
+            </div>
+            <div class="card-body">
+                <p class="card-text">Contact Count: @Model.ContactCount</p>
+                <p>New Contacts:</p>
+                <ul>
+                    @foreach (var contact in Model.Top10Contacts)
+                    {
+                        <li title="@contact.Message">@contact.FullName</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-3">
+            <div class="card-header text-white bg-primary">
+                Comments
+            </div>
+            <div class="card-body">
+                <p class="card-text">Comment Count: @Model.CommentCount</p>
+                <p class="card-text">Comment Approved Count: @Model.CommentApprovedCount</p>
+                <p>New Comments:</p>
+                <ul>
+                    @foreach (var comment in Model.Top10Comments)
+                    {
+                        <li title="@comment.CommentMessage">@comment.Name</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

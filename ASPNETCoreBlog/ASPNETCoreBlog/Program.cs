@@ -12,6 +12,10 @@ builder.Services.AddControllersWithViews(options =>
     {
         options.CacheProfiles.Add(cacheProfile.Key, cacheProfile.Get<CacheProfile>());
     }
+}).AddNewtonsoftJson(opt =>
+{
+    opt.UseMemberCasing();
+    opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 }).AddRazorOptions(options =>
 {
     // Clear existing file extensions and add only .cshtml

@@ -8,5 +8,10 @@ namespace ASPNETCoreBlog.Infrastructure
         {
             return menuItems.OrderBy(x => x.Order).ThenBy(x => x.Title);
         }
+
+        public static bool IsAdmin(this HttpContext context)
+        {
+            return context.User.IsInRole("admin");
+        }
     }
 }

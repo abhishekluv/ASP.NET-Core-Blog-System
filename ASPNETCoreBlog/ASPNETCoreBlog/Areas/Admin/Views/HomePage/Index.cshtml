@@ -1,0 +1,76 @@
+﻿@model HomePage
+
+@{
+    ViewData["Title"] = "Manage Home Page";
+}
+
+<h1>Manage Home Page</h1>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Index">
+            <input type="hidden" asp-for="Id"/>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="mb-3">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="CallToAction" class="control-label"></label>
+                <textarea asp-for="CallToAction"></textarea>
+                <span asp-validation-for="CallToAction" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="BeforeContent" class="control-label"></label>
+                <textarea asp-for="BeforeContent"></textarea>
+                <span asp-validation-for="BeforeContent" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Content" class="control-label"></label>
+                <textarea asp-for="Content"></textarea>
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="AfterContent" class="control-label"></label>
+                <textarea asp-for="AfterContent"></textarea>
+                <span asp-validation-for="AfterContent" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="FooterContent" class="control-label"></label>
+                <textarea asp-for="FooterContent"></textarea>
+                <span asp-validation-for="FooterContent" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Image" class="control-label"></label>
+                <input asp-for="Image" class="form-control" />
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="MetaKeywords" class="control-label"></label>
+                <textarea asp-for="MetaKeywords" class="form-control"></textarea>
+                <span asp-validation-for="MetaKeywords" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="MetaDescription" class="control-label"></label>
+                <textarea asp-for="MetaDescription" class="form-control"></textarea>
+                <span asp-validation-for="MetaDescription" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <input type="submit" value="Save" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+    <script>
+        new SimpleMDE({ element: document.getElementById("Content") });
+        new SimpleMDE({ element: document.getElementById("CallToAction") });
+        new SimpleMDE({ element: document.getElementById("BeforeContent") });
+        new SimpleMDE({ element: document.getElementById("AfterContent") });
+        new SimpleMDE({ element: document.getElementById("FooterContent") });
+    </script>
+}
