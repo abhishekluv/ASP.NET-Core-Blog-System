@@ -9,6 +9,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="nofollow,noindex,noarchive,noodp,notranslate,noimageindex,nosnippet,noydir" />
     <cache expires-after="@TimeSpan.FromSeconds(cacheTimeInSeconds)">@await Component.InvokeAsync("DNSPrefetch")</cache>
     @RenderSection("MetaTags", false)
     <title>@ViewData["Title"] - <cache expires-after="@TimeSpan.FromSeconds(cacheTimeInSeconds)">@await Component.InvokeAsync("SiteName")</cache></title>

@@ -1,0 +1,100 @@
+﻿@model SiteSettings
+
+@{
+    ViewData["Title"] = "Site Settings";
+}
+
+<h1>Site Settings</h1>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Index">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="Id" type="hidden"/>
+            <div class="mb-3">
+                <label asp-for="SiteName" class="control-label"></label>
+                <input asp-for="SiteName" class="form-control" />
+                <span asp-validation-for="SiteName" class="text-danger"></span>
+            </div>
+            <div class="mb-3 form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsRegister" /> @Html.DisplayNameFor(model => model.IsRegister)
+                </label>
+            </div>
+            <div class="mb-3">
+                <label asp-for="LogoURL" class="control-label"></label>
+                <input asp-for="LogoURL" class="form-control" />
+                <span asp-validation-for="LogoURL" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="FaviconURL" class="control-label"></label>
+                <input asp-for="FaviconURL" class="form-control" />
+                <span asp-validation-for="FaviconURL" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="SiteAuthor" class="control-label"></label>
+                <input asp-for="SiteAuthor" class="form-control" />
+                <span asp-validation-for="SiteAuthor" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="GoogleSiteVerification" class="control-label"></label>
+                <textarea asp-for="GoogleSiteVerification" class="form-control"></textarea>
+                <span asp-validation-for="GoogleSiteVerification" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="GoogleAnalytics" class="control-label"></label>
+                <textarea asp-for="GoogleAnalytics" class="form-control"></textarea>
+                <span asp-validation-for="GoogleAnalytics" class="text-danger"></span>
+            </div>
+            <div class="mb-3 form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsCustomCSSOn" /> @Html.DisplayNameFor(model => model.IsCustomCSSOn)
+                </label>
+            </div>
+            <div class="mb-3">
+                <label asp-for="CustomCSS" class="control-label"></label>
+                <textarea asp-for="CustomCSS" class="form-control"></textarea>
+                <span asp-validation-for="CustomCSS" class="text-danger"></span>
+            </div>
+            <div class="mb-3 form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsCustomJSOn" /> @Html.DisplayNameFor(model => model.IsCustomJSOn)
+                </label>
+            </div>
+            <div class="mb-3">
+                <label asp-for="CustomJavaScript" class="control-label"></label>
+                <textarea asp-for="CustomJavaScript" class="form-control"></textarea>
+                <span asp-validation-for="CustomJavaScript" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="DNSPreconnect" class="control-label"></label>
+                <textarea asp-for="DNSPreconnect" class="form-control"></textarea>
+                <span asp-validation-for="DNSPreconnect" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="DNSPrefetch" class="control-label"></label>
+                <textarea asp-for="DNSPrefetch" class="form-control"></textarea>
+                <span asp-validation-for="DNSPrefetch" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="SiteFooter" class="control-label"></label>
+                <textarea asp-for="SiteFooter" class="form-control"></textarea>
+                <span asp-validation-for="SiteFooter" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+    <script>
+        new SimpleMDE({ element: document.getElementById("SiteFooter") });
+        new SimpleMDE({ element: document.getElementById("AboutAuthor") });
+        new SimpleMDE({ element: document.getElementById("BlogAuthor") });
+        new SimpleMDE({ element: document.getElementById("EventSpeaker") });
+    </script>
+}

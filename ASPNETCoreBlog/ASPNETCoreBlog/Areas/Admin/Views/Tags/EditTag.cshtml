@@ -1,0 +1,46 @@
+﻿@model Tag
+
+@{
+    ViewData["Title"] = "Edit Tag";
+}
+
+<h1>Edit Tag</h1>
+
+<h4>Tag</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="EditTag">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id"/>
+            <div class="mb-3">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="TagImage" class="control-label"></label>
+                <input asp-for="TagImage" class="form-control" />
+                <span asp-validation-for="TagImage" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="TagDescription" class="control-label"></label>
+                <input asp-for="TagDescription" class="form-control" />
+                <span asp-validation-for="TagDescription" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="TagSummary" class="control-label"></label>
+                <textarea asp-for="TagSummary" class="form-control"></textarea>
+                <span asp-validation-for="TagSummary" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <input type="submit" value="Save Tag" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

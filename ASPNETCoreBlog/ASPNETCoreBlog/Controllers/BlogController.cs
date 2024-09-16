@@ -186,7 +186,7 @@ public class BlogController : Controller
 
     [HttpGet]
     [Route("blog/archives", Name = "BlogArchives")]
-    public async Task<IActionResult> BlogArchive(int page = 1, int pageSize = 10)
+    public async Task<IActionResult> BlogArchive(int page = 1, int pageSize = 6)
     {
         try
         {
@@ -246,7 +246,7 @@ public class BlogController : Controller
     [HttpGet]
     [Route("tags", Name = "Tags")]
     [ResponseCache(CacheProfileName = "BlogsCache")]
-    public async Task<IActionResult> Tags(int page = 1, int pageSize = 10)
+    public async Task<IActionResult> Tags(int page = 1, int pageSize = 6)
     {
         // Check if there are any unexpected query string parameters
         if (Request.Query.Keys.Any(key => key != "page" && key != "pageSize"))
@@ -301,7 +301,7 @@ public class BlogController : Controller
     [HttpGet]
     [Route("tag/{tagName}", Name = "Tag")]
     [ResponseCache(CacheProfileName = "BlogsCache")]
-    public async Task<IActionResult> Tag(string tagName, int page = 1, int pageSize = 10)
+    public async Task<IActionResult> Tag(string tagName, int page = 1, int pageSize = 5)
     {
         // Check if tagName is null or empty
         if (string.IsNullOrWhiteSpace(tagName))

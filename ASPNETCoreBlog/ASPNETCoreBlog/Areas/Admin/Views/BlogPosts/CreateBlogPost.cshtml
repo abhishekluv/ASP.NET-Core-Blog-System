@@ -1,0 +1,134 @@
+﻿@model BlogPostViewModel
+
+@{
+    ViewData["Title"] = "Create BlogPost";
+}
+
+<h1>Create BlogPost</h1>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="CreateBlogPost">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="mb-3">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Slug" class="control-label"></label>
+                <input asp-for="Slug" class="form-control" />
+                <span asp-validation-for="Slug" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="DatePublished" class="control-label"></label>
+                <input asp-for="DatePublished" class="form-control" type="datetime-local" />
+                <span asp-validation-for="DatePublished" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="CallToAction" class="control-label"></label>
+                <textarea asp-for="CallToAction"></textarea>
+                <span asp-validation-for="CallToAction" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="BeforeContent" class="control-label"></label>
+                <textarea asp-for="BeforeContent"></textarea>
+                <span asp-validation-for="BeforeContent" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Content" class="control-label"></label>
+                <textarea asp-for="Content"></textarea>
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="AfterContent" class="control-label"></label>
+                <textarea asp-for="AfterContent"></textarea>
+                <span asp-validation-for="AfterContent" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="FooterContent" class="control-label"></label>
+                <textarea asp-for="FooterContent"></textarea>
+                <span asp-validation-for="FooterContent" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Image" class="control-label"></label>
+                <input asp-for="Image" class="form-control" />
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+            <div class="mb-3 form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsFeatured" /> @Html.DisplayNameFor(model => model.IsFeatured)
+                </label>
+            </div>
+            <div class="mb-3">
+                <label asp-for="MetaKeywords" class="control-label"></label>
+                <input asp-for="MetaKeywords" class="form-control" />
+                <span asp-validation-for="MetaKeywords" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="MetaDescription" class="control-label"></label>
+                <textarea asp-for="MetaDescription" class="form-control"></textarea>
+                <span asp-validation-for="MetaDescription" class="text-danger"></span>
+            </div>
+            <div class="mb-3 form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsVisibleToSearchEngine" /> @Html.DisplayNameFor(model => model.IsVisibleToSearchEngine)
+                </label>
+            </div>
+            <div class="mb-3 form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsCommentEnabled" /> @Html.DisplayNameFor(model => model.IsCommentEnabled)
+                </label>
+            </div>
+            <div class="mb-3">
+                <label asp-for="TagIds" class="control-label"></label>
+                <select asp-for="TagIds" asp-items="ViewBag.Tags" multiple class="form-control"></select>
+                <span asp-validation-for="TagIds" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Ad1" class="control-label"></label>
+                <textarea asp-for="Ad1"></textarea>
+                <span asp-validation-for="Ad1" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Ad2" class="control-label"></label>
+                <textarea asp-for="Ad2"></textarea>
+                <span asp-validation-for="Ad2" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Ad3" class="control-label"></label>
+                <textarea asp-for="Ad3"></textarea>
+                <span asp-validation-for="Ad3" class="text-danger"></span>
+            </div>
+            <div class="mb-3 form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsPostEnabled" /> @Html.DisplayNameFor(model => model.IsPostEnabled)
+                </label>
+            </div>
+            <div class="mb-3">
+                <label asp-for="BuyMeCoffee" class="control-label"></label>
+                <textarea asp-for="BuyMeCoffee"></textarea>
+                <span asp-validation-for="BuyMeCoffee" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+    <script>
+        new SimpleMDE({ element: document.getElementById("Content") });
+        new SimpleMDE({ element: document.getElementById("CallToAction") });
+        new SimpleMDE({ element: document.getElementById("BeforeContent") });
+        new SimpleMDE({ element: document.getElementById("AfterContent") });
+        new SimpleMDE({ element: document.getElementById("FooterContent") });
+        new SimpleMDE({ element: document.getElementById("Ad1") });
+        new SimpleMDE({ element: document.getElementById("Ad2") });
+        new SimpleMDE({ element: document.getElementById("Ad3") });
+        new SimpleMDE({ element: document.getElementById("BuyMeCoffee") });
+    </script>
+}

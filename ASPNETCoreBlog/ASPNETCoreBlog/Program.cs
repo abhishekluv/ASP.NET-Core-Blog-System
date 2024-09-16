@@ -1,5 +1,6 @@
 using ASPNETCoreBlog.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.ResponseCompression;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
@@ -27,6 +28,18 @@ builder.Services.AddControllersWithViews(options =>
     options.AreaViewLocationFormats.Add("/Admin/Views/Shared/{0}.cshtml");
 });
 
+builder.Services.AddResponseCompression(options =>
+{
+    options.EnableForHttps = true;
+    options.Providers.Add<GzipCompressionProvider>();
+});
+
+builder.Services.Configure<GzipCompressionProviderOptions>(options =>
+{
+    options.Level = System.IO.Compression.CompressionLevel.Fastest;
+});
+
+
 builder.Services.ConfigureEFSecondLevelCache(builder.Configuration);
 builder.Services.ConfigureEFCore(builder.Configuration);
 builder.Services.ConfigureIdentity(builder.Configuration);
@@ -41,6 +54,8 @@ builder.Services.AddHsts(options =>
 builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
+
+app.UseResponseCompression();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -57,7 +72,7 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseMiddleware<HtmlWhitespaceMiddleware>();
 app.MapControllerRoute(
     name: "pages",
     pattern: "{slug}", defaults: new { Controller = "Pages", Action = "Index" });

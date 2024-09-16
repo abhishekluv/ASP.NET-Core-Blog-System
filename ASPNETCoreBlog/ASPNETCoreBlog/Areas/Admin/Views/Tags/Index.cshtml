@@ -1,0 +1,69 @@
+﻿@{
+    ViewBag.Title = "Tags";
+}
+
+<h2>Tags</h2>
+
+<a asp-action="CreateTag" class="btn btn-success">Create New Tag</a>
+
+<button class="btn btn-info" type="button" onclick="return reloadDataTable();"><i class="glyphicon glyphicon-refresh"></i>Refresh</button>
+
+<br />
+<br />
+
+<table id="dataTable" class="table table-bordered table-hover table-responsive">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+</table>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#dataTable").DataTable({
+                "info": true,
+                "lengthMenu": [[5, 25, 50], [5, 25, 50]],
+                "ajax": {
+                    "url": "/Admin/Tags/GetTagsAsJson",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                //"pagingType": "full_numbers",
+                "responsive": true,
+                "columns": [
+                    { "data": "Name", "name": "Name" },
+                    { "data": "TagDescription", "name": "Tag Description" },
+                    {
+                        "data": "Actions",
+                        "render": function (data, type, row, meta) {
+                            data = '<div class="dropdown">' +
+                                '<button class="btn btn-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">' +
+                                'Actions' +
+                                '</button>' +
+                                '<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">' +
+                                '<li><a class="dropdown-item" href="/admin/tags/edittag/' + row.Id + '" title="Edit">Edit</a></li>' +
+                                '<li><a class="dropdown-item" href="/admin/tags/deletetag/' + row.Id + '" title="Delete">Delete</a></li>' +
+                                '</ul>' +
+                                '</div>';
+                            return data;
+                        }
+                    }
+                ],
+                "serverSide": "true",
+                "order": [0, "desc"],
+                "processing": "true"
+            });
+        });
+
+        function reloadDataTable() {
+            var employeeTable = $("#dataTable").DataTable();
+            employeeTable.ajax.reload();
+        }
+
+
+    </script>
+}

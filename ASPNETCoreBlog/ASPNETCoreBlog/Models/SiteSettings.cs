@@ -11,7 +11,6 @@
 
         public string? BlogAuthorSummary { get; set; }
         public string? SiteFooter { get; set; }
-        public string? FooterCallToAction { get; set; }
         public string? GoogleSiteVerification { get; set; }
         public string? GoogleAnalytics { get; set; }
         public bool IsCustomCSSOn { get; set; }
