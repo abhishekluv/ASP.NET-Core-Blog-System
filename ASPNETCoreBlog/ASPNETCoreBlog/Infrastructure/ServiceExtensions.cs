@@ -10,8 +10,12 @@ namespace ASPNETCoreBlog.Infrastructure
     {
         public static void ConfigureEFCore(this IServiceCollection services, IConfiguration config)
         {
+            //services.AddDbContext<BlogSystemContext>((serviceProvider, options) =>
+            //    options.UseSqlServer(config.GetConnectionString("CWACoreCMS"), x => x.UseQuerySplittingBehavior(QuerySplittingBehavior.SingleQuery))
+            //           .AddInterceptors(serviceProvider.GetRequiredService<SecondLevelCacheInterceptor>())
+            //);
             services.AddDbContext<BlogSystemContext>((serviceProvider, options) =>
-                options.UseSqlServer(config.GetConnectionString("CWACoreCMS"), x => x.UseQuerySplittingBehavior(QuerySplittingBehavior.SingleQuery))
+                options.UseSqlServer(Environment.GetEnvironmentVariable("aspnetcoreblogSystemDb"), x => x.UseQuerySplittingBehavior(QuerySplittingBehavior.SingleQuery))
                        .AddInterceptors(serviceProvider.GetRequiredService<SecondLevelCacheInterceptor>())
             );
         }
